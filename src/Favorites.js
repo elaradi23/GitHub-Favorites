@@ -1,21 +1,34 @@
 import React, { Component, Fragment } from "react";
+import "./Favorites.css";
 
 class Favorites extends Component {
+  removeFromFavorites = repo => {
+    this.props.removeFromFavorites(repo);
+  };
+
   render() {
     const favs = this.props.favs.map(repo => {
       return (
         <Fragment>
           <tr>
-            <td>{repo.full_name}</td>
+            <td>{repo.name}</td>
             <td>{repo.language}</td>
-            <td>{repo.version}</td>
+            <td>{repo.latest_tag}</td>
+            <td>
+              <a
+                className="Favorites-Remove"
+                onClick={() => this.removeFromFavorites(repo)}
+              >
+                Remove
+              </a>
+            </td>
           </tr>
         </Fragment>
       );
     });
     return (
       <div>
-        <table style={{ "text-align": "left", margin: "10px" }}>
+        <table className="Favorites-Table">
           <thead>
             <td>
               <strong>Name</strong>

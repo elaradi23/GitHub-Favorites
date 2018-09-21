@@ -1,21 +1,19 @@
 import React, { Component, Fragment } from "react";
+import "./Search.css";
+import { Button } from "react-bootstrap/lib";
 
 class Search extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      search: [],
-      favs: []
+      search: []
     };
   }
 
-  componentDidMount() {
-    this.searchRepositories("shopify");
-  }
-
-  searchRepositories = search => {
+  searchRepositories = e => {
+    e.preventDefault();
     const query = `{
-      search(query: ${search}, type: REPOSITORY, first: 10) {
+      search(query: ${this.input.value}, type: REPOSITORY, first: 10) {
         edges {
           node {
             ... on Repository {
@@ -66,6 +64,16 @@ class Search extends Component {
       .catch(error => console.error(error));
   };
 
+  addToFavorites = repo => {
+    this.props.addToFavorites(repo);
+  };
+
+  existsInFavorites = repo => {
+    return this.props.favs.some(fav_repo => {
+      return fav_repo.id === repo.id;
+    });
+  };
+
   render() {
     const repos = this.state.search.map(repo => {
       return (
@@ -74,34 +82,54 @@ class Search extends Component {
             <td>{repo.name}</td>
             <td>{repo.language}</td>
             <td>{repo.latest_tag}</td>
+            {!this.existsInFavorites(repo) && (
+              <td>
+                <a
+                  className="Search-Add"
+                  onClick={() => this.addToFavorites(repo)}
+                >
+                  Add
+                </a>
+              </td>
+            )}
           </tr>
         </Fragment>
       );
     });
     return (
-      <div>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            Name:
-            <input type="text" ref={input => (this.input = input)} />
-          </label>
-          <input type="submit" value="Submit" />
+      <Fragment>
+        <form
+          className="input-group"
+          onSubmit={this.searchRepositories.bind(this)}
+        >
+          <input
+            className="Search-Bar form-control col"
+            type="text"
+            ref={input => (this.input = input)}
+          />
+          <Button className="Search-Button" type="submit">
+            Search
+          </Button>
         </form>
-        <table style={{ "text-align": "left", margin: "10px" }}>
-          <thead>
-            <td>
-              <strong>Name</strong>
-            </td>
-            <td>
-              <strong>Language</strong>
-            </td>
-            <td>
-              <strong>Latest Tag</strong>
-            </td>
-          </thead>
-          <tbody>{repos}</tbody>
-        </table>
-      </div>
+        {this.state.search.length === 0 ? (
+          <p className="Search-No-Results">No Results</p>
+        ) : (
+          <table className="Search-Table">
+            <thead>
+              <td>
+                <strong>Name</strong>
+              </td>
+              <td>
+                <strong>Language</strong>
+              </td>
+              <td>
+                <strong>Latest Tag</strong>
+              </td>
+            </thead>
+            <tbody>{repos}</tbody>
+          </table>
+        )}
+      </Fragment>
     );
   }
 }

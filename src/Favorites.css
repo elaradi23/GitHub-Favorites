@@ -1,0 +1,11 @@
+.Favorites-Table {
+  width: 100%;
+  text-align: left;
+  border-spacing: 10px 10px;
+  border-collapse: separate;
+}
+
+.Favorites-Remove {
+  color: #723fec !important;
+  text-decoration: underline !important;
+}
