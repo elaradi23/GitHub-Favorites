@@ -13,11 +13,11 @@ class App extends Component {
     };
   }
 
-  addToFavorites(repo) {
+  addToFavorites = repo => {
     this.setState({ favs: [...this.state.favs, repo] });
-  }
+  };
 
-  removeFromFavorites(repo) {
+  removeFromFavorites = repo => {
     let temp_favs = this.state.favs;
     temp_favs.splice(
       temp_favs.findIndex(function(i) {
@@ -26,7 +26,7 @@ class App extends Component {
       1
     );
     this.setState({ favs: temp_favs });
-  }
+  };
 
   render() {
     return (

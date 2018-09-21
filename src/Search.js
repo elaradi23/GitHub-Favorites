@@ -79,7 +79,9 @@ class Search extends Component {
       return (
         <Fragment>
           <tr>
-            <td>{repo.name}</td>
+            <td>
+              <a href={repo.url}>{repo.name}</a>
+            </td>
             <td>{repo.language}</td>
             <td>{repo.latest_tag}</td>
             {!this.existsInFavorites(repo) && (
