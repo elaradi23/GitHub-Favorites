@@ -1,0 +1,31 @@
+.Search-Button {
+  background-color: #723fec;
+  margin: 0px 15px;
+  color: white;
+}
+
+.Search-Search {
+  text-align: left;
+  margin: 15px;
+}
+
+.Search-Bar {
+  text-align: left;
+  margin-left: 15px;
+}
+
+.Search-Add {
+  color: #723fec !important;
+  text-decoration: underline !important;
+}
+
+.Search-Table {
+  width: 100%;
+  text-align: left;
+  border-spacing: 10px 10px;
+  border-collapse: separate;
+}
+
+.Search-No-Results {
+  margin: 15px;
+}
